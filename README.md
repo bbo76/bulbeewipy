@@ -25,9 +25,9 @@ Set the tone of the light if you want a cold or hot white. /!\ Only works in whi
 
 ## Example
 ```python
-    from  bulbeewipy  import BeewiSmartLigh
+    from  bulbeewipy  import BeewiSmartLight
     from  time  import  sleep
-    b = BeewiSmartLigh("D0:39:72:CC:AA:48")
+    b = BeewiSmartLight("D0:39:72:CC:AA:48")
     b.turnOn()
     sleep(8)
     b.turnOff()
