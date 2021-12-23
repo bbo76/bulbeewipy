@@ -1,7 +1,7 @@
-from bulbeewipy import BeewiSmartLightPoller
+from bulbeewipy import BeewiSmartLigh
 from time import sleep
 
-b = BeewiSmartLightPoller("D0:39:72:CC:AA:48")
-b.turn_on()
+b = BeewiSmartLigh("D0:39:72:CC:AA:48")
+b.turnOn()
 sleep(8)
-b.turn_off()
+b.turnOff()

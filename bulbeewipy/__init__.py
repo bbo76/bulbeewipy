@@ -29,7 +29,7 @@ class BeewiSmartLight:
         command = "14808080"
         self.__writeCharacteristic(command)
         
-    def setColor(self,r,g,b):
+    def setColor(self, r:int, g:int, b:int):
         """ Switch the light in color mode and set the RGB color """
         hexR = str(hex(r)[2:]).zfill(2)
         hexG = str(hex(g)[2:]).zfill(2)
