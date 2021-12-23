@@ -1,6 +1,7 @@
 
 # BulBeewiPy
-## [![PyPI version](https://badge.fury.io/py/bulbeewipy.svg)](https://badge.fury.io/py/bulbeewipy)
+[![PyPI version](https://badge.fury.io/py/bulbeewipy.svg)](https://badge.fury.io/py/bulbeewipy)
+
 Python library to control Beewi by Otio smart lights.
 You can read and write this settings :
  - Brightness
