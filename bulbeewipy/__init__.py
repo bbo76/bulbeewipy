@@ -1,6 +1,7 @@
 """ Beewi SmartLight used by Home Assistant """
 import logging
 from bluepy import btle
+from tenacity import retry
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -17,37 +18,55 @@ class BeewiSmartLight:
     def turnOn(self):
         """ Turn on the light """
         command = "1001"
-        self.__writeCharacteristic(command)
+        try:
+            self.__writeCharacteristic(command)
+        except Exception as e:
+            _LOGGER.error(e)
 
     def turnOff(self):
         """ Turn off the light """
-        command = "1000"
-        self.__writeCharacteristic(command)
+        try:
+            command = "1000"
+            self.__writeCharacteristic(command)
+        except Exception as e:
+            _LOGGER.error(e)
         
     def setWhite(self):
         """ Switch the light in white mode """
-        command = "14808080"
-        self.__writeCharacteristic(command)
+        try:
+            command = "14808080"
+            self.__writeCharacteristic(command)
+        except Exception as e:
+            _LOGGER.error(e)
         
     def setColor(self, r:int, g:int, b:int):
         """ Switch the light in color mode and set the RGB color """
-        hexR = str(hex(r)[2:]).zfill(2)
-        hexG = str(hex(g)[2:]).zfill(2)
-        hexB = str(hex(b)[2:]).zfill(2)
-        command = "13" + hexR + hexG + hexB
-        self.__writeCharacteristic(command)
+        try:
+            hexR = str(hex(r)[2:]).zfill(2)
+            hexG = str(hex(g)[2:]).zfill(2)
+            hexB = str(hex(b)[2:]).zfill(2)
+            command = "13" + hexR + hexG + hexB
+            self.__writeCharacteristic(command)
+        except Exception as e:
+            _LOGGER.error(e)
 
     def setBrightness(self, brightness:int):
         """ Set the brightness of the light """
-        brightnessten = 0 if brightness == 0 else (round((brightness / 2.55 ) / 10) + 1)
-        command = "120" + str(hex(2 if brightnessten < 2 else brightnessten)[2:])
-        self.__writeCharacteristic(command)
+        try:
+            brightnessten = 0 if brightness == 0 else (round((brightness / 2.55 ) / 10) + 1)
+            command = "120" + str(hex(2 if brightnessten < 2 else brightnessten)[2:])
+            self.__writeCharacteristic(command)
+        except Exception as e:
+            _LOGGER.error(e)
 
     def setWhiteWarm(self, warm:int):
         """ Set the tone of the light cold/hot """
-        warmten = 0 if warm == 0 else (round((warm / 2.55 ) / 10) + 1)
-        command = "110" + str(hex(2 if warmten < 2 else warmten)[2:])
-        self.__writeCharacteristic(command)
+        try:
+            warmten = 0 if warm == 0 else (round((warm / 2.55 ) / 10) + 1)
+            command = "110" + str(hex(2 if warmten < 2 else warmten)[2:])
+            self.__writeCharacteristic(command)
+        except Exception as e:
+            _LOGGER.error(e)
 
     def getSettings(self, verbose = 0):
         """ Get current state of the light """
@@ -85,16 +104,18 @@ class BeewiSmartLight:
             return self.settings
         except:
             raise
-
+    
+    @retry(stop=(stop_after_delay(10) | stop_after_attempt(5)))
     def __writeCharacteristic(self,command):
         """ Send command to the light """
         try:
             self.peripheral.connect(self._mac)
             self.peripheral.writeCharacteristic(0x0021,bytes.fromhex("55" + command + "0d0a"))
             self.peripheral.disconnect()
-        except Exception as e:
-            _LOGGER.error(e)
-            
+        except:
+            raise
+
+    @retry(stop=(stop_after_delay(10) | stop_after_attempt(5)))
     def __readCharacteristic(self,characteristic):
         """ Read BTLE characteristic """
         try:
