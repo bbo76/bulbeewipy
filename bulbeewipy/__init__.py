@@ -91,10 +91,11 @@ class BeewiSmartLight:
             
             if(0x2 <= (self.settings[1] & 0x0F) <= 0xB):
                 self.isWhite = 1
-                self.temperature = (self.settings[1] & 0x0F) - 2
+                temp = (self.settings[1] & 0x0F) - 2
+                self.temperature = int(0 if temp == 0 else (((temp + 1) * 2.55) * 10))
             elif(0x0 <= (self.settings[1] & 0x0F) < 0x2):
                 self.isWhite = 0
-                self.temperature = "N/A"
+                self.temperature = 0
             brightness = ((self.settings[1] & 0xF0) >> 4) - 2
             self.brightness = int(0 if brightness == 0 else (((brightness + 1) * 2.55) * 10))
             self.red = self.settings[2]
