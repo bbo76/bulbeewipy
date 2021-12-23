@@ -6,10 +6,10 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="bulbeewipy",
-    version="1.0",
+    version="1.0.0",
     author="bbo76",
     author_email="baptiste.boquain@gmail.com",
-    description="Library to control Beewi SmartLight by Otio bulb in BLE",
+    description="Python library to control Beewi SmartLight by Otio bulb in BLE",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/bbo76/bulbeewipy",

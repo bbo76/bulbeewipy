@@ -8,7 +8,7 @@ You can read and write this settings :
  - Color (R/G/B)
  - White/Color mode
 ## Methods explanation
-*⚠️  Each passed integer values must be in the range **[0,255]***
+*/!\ Each passed integer values must be in the range **[0,255]***
 ### turnOn()
 Turn on the light
 ### turnOff()
