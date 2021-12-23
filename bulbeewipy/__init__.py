@@ -1,7 +1,7 @@
 """ Beewi SmartLight used by Home Assistant """
 import logging
 from bluepy import btle
-from tenacity import retry
+import tenacity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -105,7 +105,7 @@ class BeewiSmartLight:
         except:
             raise
     
-    @retry(stop=(stop_after_delay(10) | stop_after_attempt(5)))
+    @tenacity.retry(stop=(tenacity.stop_after_delay(10) | tenacity.stop_after_attempt(5)))
     def __writeCharacteristic(self,command):
         """ Send command to the light """
         try:
@@ -115,7 +115,7 @@ class BeewiSmartLight:
         except:
             raise
 
-    @retry(stop=(stop_after_delay(10) | stop_after_attempt(5)))
+    @tenacity.retry(stop=(tenacity.stop_after_delay(10) | tenacity.stop_after_attempt(5)))
     def __readCharacteristic(self,characteristic):
         """ Read BTLE characteristic """
         try:

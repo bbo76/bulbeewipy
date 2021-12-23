@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="bulbeewipy",
-    version="1.0.0",
+    version="1.0.1",
     author="bbo76",
     author_email="baptiste.boquain@gmail.com",
     description="Python library to control Beewi SmartLight by Otio bulb in BLE",
@@ -21,6 +21,6 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.5',
-    install_requires=['bluepy'],
+    install_requires=['bluepy','tenacity'],
     keywords='beewi light ble homeassistant bluetooth otio',
 )
