@@ -1,6 +1,7 @@
 
 # BulBeewiPy
-## [![PyPI version](https://badge.fury.io/py/bulbeewipy.svg)](https://badge.fury.io/py/bulbeewipy)
+[![PyPI version](https://badge.fury.io/py/bulbeewipy.svg)](https://badge.fury.io/py/bulbeewipy)
+
 Python library to control Beewi by Otio smart lights.
 You can read and write this settings :
  - Brightness
@@ -23,13 +24,14 @@ Set the brightness of the light (works in white and color mode)
 Set the tone of the light if you want a cold or hot white. /!\ Only works in white mode
 
 ## Example
-
-    from  bulbeewipy  import BeewiSmartLigh
+```python
+    from  bulbeewipy  import BeewiSmartLight
     from  time  import  sleep
-    b = BeewiSmartLigh("D0:39:72:CC:AA:48")
+    b = BeewiSmartLight("D0:39:72:CC:AA:48")
     b.turnOn()
     sleep(8)
     b.turnOff()
+ ```
 
 ## Thanks
 
