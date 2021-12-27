@@ -1,7 +1,6 @@
 """ Beewi SmartLight used by Home Assistant """
 import logging
 from bluepy import btle
-import tenacity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -22,6 +21,7 @@ class BeewiSmartLight:
             self.__writeCharacteristic(command)
         except Exception as e:
             _LOGGER.error(e)
+            raise
 
     def turnOff(self):
         """ Turn off the light """
@@ -30,6 +30,7 @@ class BeewiSmartLight:
             self.__writeCharacteristic(command)
         except Exception as e:
             _LOGGER.error(e)
+            raise
         
     def setWhite(self):
         """ Switch the light in white mode """
@@ -38,6 +39,7 @@ class BeewiSmartLight:
             self.__writeCharacteristic(command)
         except Exception as e:
             _LOGGER.error(e)
+            raise
         
     def setColor(self, r:int, g:int, b:int):
         """ Switch the light in color mode and set the RGB color """
@@ -49,6 +51,7 @@ class BeewiSmartLight:
             self.__writeCharacteristic(command)
         except Exception as e:
             _LOGGER.error(e)
+            raise
 
     def setBrightness(self, brightness:int):
         """ Set the brightness of the light """
@@ -58,6 +61,7 @@ class BeewiSmartLight:
             self.__writeCharacteristic(command)
         except Exception as e:
             _LOGGER.error(e)
+            raise
 
     def setWhiteWarm(self, warm:int):
         """ Set the tone of the light cold/hot """
@@ -67,6 +71,7 @@ class BeewiSmartLight:
             self.__writeCharacteristic(command)
         except Exception as e:
             _LOGGER.error(e)
+            raise
 
     def getSettings(self, verbose = 0):
         """ Get current state of the light """
@@ -82,6 +87,7 @@ class BeewiSmartLight:
             return self.settings
         except Exception as e:
             _LOGGER.error(e)
+            raise
         
     def __readSettings(self):
         """ Read settings of the light """
@@ -106,7 +112,6 @@ class BeewiSmartLight:
         except:
             raise
     
-    @tenacity.retry(stop=(tenacity.stop_after_delay(10) | tenacity.stop_after_attempt(5)))
     def __writeCharacteristic(self,command):
         """ Send command to the light """
         try:
@@ -116,7 +121,6 @@ class BeewiSmartLight:
         except:
             raise
 
-    @tenacity.retry(stop=(tenacity.stop_after_delay(10) | tenacity.stop_after_attempt(5)))
     def __readCharacteristic(self,characteristic):
         """ Read BTLE characteristic """
         try:
